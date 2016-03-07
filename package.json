@@ -1,0 +1,11 @@
+{
+    "name": "project",
+    "version": "1.0.0",
+    "description": "A CLI tool to scaffold a project.",
+    "main": "index.js",
+    "bin": {
+        "project": "index.js"
+    },
+    "author": "Yicheng Zhang",
+    "license": "MIT"
+}
