@@ -14,13 +14,17 @@ console.log("Scaffolding...");
 // var argv = process.argv;
 
 var projectName = process.argv[2];
-var optionName = process.argv[3];
-var options = process.argv.slice(2);
+var options = process.argv.slice(3);
 console.log(projectName);
 console.log(options);
 console.log(options.join());
 
-parseOptions(options)
+if (options.length !== 0){
+    parseOptions(options)
+}
+else{
+    createProjectFolder(projectName, []);
+}
 
 function parseOptions(options){
     optionList = options.join().split("-");
@@ -69,12 +73,11 @@ function parseOption(option){
         default:
         console.log("No option " + optionNameKey);
         break;
-   }
+    }
 
 }
 
 function parseType(optionNameValue, optionValues){
-
     switch (optionNameValue){
         case "android":
         createProjectFolder(projectName, folder_android);

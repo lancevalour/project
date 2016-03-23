@@ -1,18 +1,30 @@
 # project
 A nodejs cli to scaffold a project directory. 
 
-# Usage
+## Installation
 ```
-$ npm install project
+ 
+```
+
+## Usage
+```
 $ cd [your directory] 
 $ project [project name]
-$ project [project name] [project type]
+$ project [project name] {option}
+Options:
+    -type, =android, =java, =custom
+    
+
 ```
 
-# Project Type
-android 
-ios
-java 
+## Example
+```
+$ project mProject -type=android
 
+$ project mProject -type=java
 
-# Todo
+$ project mPorject -type=custom sub1 sub2 sub3
+```
+
+## Todo
+Add more stuff
