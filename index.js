@@ -2,17 +2,21 @@
 
 var fs = require('fs');
 
-var folder = ["./apk", "./code", "./design", "./screenshot", "./test"];
+var folder_android = ["./apk", "./code", "./design", "./screenshot", "./test"];
+
+var folder_java = ["./code", "./design", "./test", "./screenshot"];
+
 
 console.log("Scaffolding...");
 
-var argv = ["node", "project", "-type=custom", "folder1", "folder2", "folder3", "-g", "-s", "-a=some", "some1", "some2"];
+// var argv = ["node", "project", "-type=custom", "folder1", "folder2", "folder3", "-g", "-s", "-a=some", "some1", "some2"];
 
-//var argv = process.argv;
+// var argv = process.argv;
 
-var projectName = argv[2];
-var optionName = argv[3];
-var options = argv.slice(2);
+var projectName = process.argv[2];
+var optionName = process.argv[3];
+var options = process.argv.slice(2);
+console.log(projectName);
 console.log(options);
 console.log(options.join());
 
@@ -24,7 +28,6 @@ function parseOptions(options){
     console.log(optionList);
 
     optionList.forEach(function(option) {
-
       parseOption(option);
   });
 
@@ -49,48 +52,67 @@ function parseOption(option){
 
     console.log("optionname 1 " + optionName.split("=")[0]);
     
-    optionNameValue = optionName.split("=").slice(1);
 
-    
-    switch (optionName.split("=")[0]){
+    optionNameKey = optionName.split("=")[0];
+    optionNameValue = optionName.split("=")[1];
+
+
+    switch (optionNameKey){
         case "type":
-        createProjectFolder(projectName);
+        parseType(optionNameValue, optionValues);
         break;
         case "option2":
-        createProjectFolder(projectName);
+        // createProjectFolder(projectName);
+        break;
+        case "option3":
         break;
         default:
-        console.log("No ");
+        console.log("No option " + optionNameKey);
         break;
+   }
 
+}
+
+function parseType(optionNameValue, optionValues){
+
+    switch (optionNameValue){
+        case "android":
+        createProjectFolder(projectName, folder_android);
+        break;
+        case "custom":
+        createProjectFolder(projectName, optionValues);
+        break;
+        case "java":
+        createProjectFolder(projectName, folder_java);
+        break;
+        default:
+        console.log("No type " + optionNameValue);
+        break;
+    }
+}
+
+
+function createProjectFolder(folderName, folderList) {
+    folderName = "./" + folderName;
+    if (!fs.existsSync(folderName)) {
+        fs.mkdirSync(folderName)
+        try {
+            process.chdir(folderName);
+            console.log('New directory: ' + process.cwd());
+        } catch (err) {
+            console.log('chdir: ' + err);
+        }
+
+        createSubfolders(folderList);
     }
 
+    
 }
 
-function parseType(optionNameValues){
-
+function createSubfolders(folderList) {
+    folderList.forEach(function(entry) {
+        if (!fs.existsSync(entry)) {
+            fs.mkdirSync(entry);
+        }
+    });
 }
-
-
-// function createProjectFolder(folderName) {
-//     folderName = "./" + folderName;
-//     if (!fs.existsSync(folderName)) {
-//         fs.mkdirSync(folderName)
-//     }
-//     try {
-//         process.chdir(folderName);
-//         console.log('New directory: ' + process.cwd());
-//     } catch (err) {
-//         console.log('chdir: ' + err);
-//     }
-
-//     createSubfolders();
-// }
-
-// function createSubfolders(folderList) {
-//     folderList.forEach(function(entry) {
-//         if (!fs.existsSync(entry)) {
-//             fs.mkdirSync(entry);
-//         }
-//     });
-// }
